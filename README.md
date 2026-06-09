@@ -14,11 +14,19 @@ Originally designed as a hardware prototype, the architecture was upgraded to fe
 
 ## 🎥 Demonstrations
 
-![Lateral Translation](media/crab_walk_demo.gif)
-> **Lateral Translation:** The system successfully mitigates forward/backward momentum by opposing the lateral force vectors of the 45-degree rollers.
+Here are highlights of the platform's 10-DOF kinematic capabilities. All 10 maneuver demonstrations can be found in the `/media` directory.
 
-![Zero-Radius Pivot](media/zero_radius_spin.gif)
-> **Zero-Radius Pivot:** Mimicking a skid-steer maneuver to achieve 0cm drift during purely rotational execution.
+### Lateral Translation (Crabbing)
+![Sideways Movement](media/crab_left.gif)
+> The system successfully mitigates forward/backward momentum by opposing the lateral force vectors of the 45-degree rollers.
+
+### Zero-Radius Pivot
+![Zero Radius Spin](media/spin_cw.gif)
+> Mimicking a skid-steer maneuver to achieve 0cm drift during purely rotational execution.
+
+### Diagonal Vectoring
+![Diagonal Movement](media/diagonal_front_right.gif)
+> True diagonal movement achieved by driving only two wheels while stopping the other two.
 
 ---
 
