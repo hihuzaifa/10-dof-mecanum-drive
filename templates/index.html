@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>10-DOF Override</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #00ffcc;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            user-select: none;
+        }
+
+        h2 {
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+
+        .rotation-bar {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 80px);
+            grid-gap: 15px;
+        }
+
+        button {
+            width: 80px;
+            height: 80px;
+            background-color: #1e1e1e;
+            border: 2px solid #00ffcc;
+            border-radius: 12px;
+            color: #00ffcc;
+            font-size: 32px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.1s, transform 0.1s;
+            touch-action: manipulation;
+        }
+
+        button:active {
+            background-color: #00ffcc;
+            color: #121212;
+            transform: scale(0.92);
+        }
+
+        .stop-btn {
+            background-color: #331111;
+            border-color: #ff3333;
+            color: #ff3333;
+            font-size: 24px;
+        }
+
+        .stop-btn:active {
+            background-color: #ff3333;
+            color: #121212;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Telemetry: Active</h2>
+
+    <div class="rotation-bar">
+        <button class="control-btn" data-cmd="9">↶</button>
+        <button class="control-btn" data-cmd="10">↷</button>
+    </div>
+
+    <div class="grid">
+        <button class="control-btn" data-cmd="1">↖</button>
+        <button class="control-btn" data-cmd="2">▲</button>
+        <button class="control-btn" data-cmd="3">↗</button>
+
+        <button class="control-btn" data-cmd="4">◀</button>
+        <button class="control-btn stop-btn" data-cmd="0">STOP</button>
+        <button class="control-btn" data-cmd="5">▶</button>
+
+        <button class="control-btn" data-cmd="6">↙</button>
+        <button class="control-btn" data-cmd="7">▼</button>
+        <button class="control-btn" data-cmd="8">↘</button>
+    </div>
+
+    <script>
+        const buttons = document.querySelectorAll('.control-btn');
+
+        const sendCommand = (cmd) => {
+            fetch(`/command/${cmd}`).catch(err => console.error("Network Error: ", err));
+        };
+
+        buttons.forEach(btn => {
+            const cmd = btn.getAttribute('data-cmd');
+
+            btn.addEventListener('mousedown', () => sendCommand(cmd));
+            btn.addEventListener('mouseup', () => sendCommand(0));
+            btn.addEventListener('mouseleave', () => sendCommand(0));
+
+            btn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                sendCommand(cmd);
+            });
+            btn.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                sendCommand(0);
+            });
+        });
+    </script>
+</body>
+
+</html>
