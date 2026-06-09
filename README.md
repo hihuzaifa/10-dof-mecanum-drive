@@ -1,4 +1,4 @@
-# 10-DOF Omnidirectional Mecanum Drive System
+# 3-DOF Holonomic Drive System
 
 ![Project Status](https://img.shields.io/badge/Status-Complete-brightgreen)
 ![Hardware](https://img.shields.io/badge/Hardware-Raspberry_Pi_Zero_2W_%7C_Arduino_Uno-blue)
@@ -8,20 +8,20 @@
 ## 📌 Overview
 This project details the design, firmware development, and web-integration of a 4-wheel omnidirectional mobile robot. Utilizing Mecanum wheels and a custom asynchronous web interface, the platform achieves 10 Degrees of Freedom (10-DOF), allowing for highly precise spatial navigation, including true lateral (crabbing) movement, diagonal vectoring, and zero-radius pivots.
 
-Originally designed as a hardware prototype, the architecture was upgraded to feature a headless Raspberry Pi Zero 2 W acting as a local web server, bridging wireless HTTP commands to a physical serial-driven kinematics engine.
+Originally designed as a hardware prototype, the architecture was upgraded to feature a headless Raspberry Pi Zero 2W acting as a local web server, bridging wireless HTTP commands to a physical serial-driven kinematics engine.
 
 ---
 
 ## 🎥 Demonstrations
 
-Here are highlights of the platform's 10-DOF kinematic capabilities. All 10 maneuver demonstrations can be found in the `/media` directory.
+Here are highlights of the platform's 3-DOF kinematic capabilities. All 10 maneuver demonstrations can be found in the `/media` directory.
 
 ### Lateral Translation (Crabbing)
 ![Sideways Movement](media/crab_left.gif)
 > The system successfully mitigates forward/backward momentum by opposing the lateral force vectors of the 45-degree rollers.
 
 ### Zero-Radius Pivot
-![Zero Radius Spin](media/spin_cw.gif)
+![ Radius Spin](media/spin_cw.gif)
 > Mimicking a skid-steer maneuver to achieve 0cm drift during purely rotational execution.
 
 ### Diagonal Vectoring
@@ -33,7 +33,7 @@ Here are highlights of the platform's 10-DOF kinematic capabilities. All 10 mane
 ## 🏗️ Hardware Architecture
 
 The physical chassis is stripped down to ensure maximum power delivery and signal integrity:
-* **The Brain:** Raspberry Pi Zero 2 W (Running headless Raspberry Pi OS Lite, 32-bit).
+* **The Brain:** Raspberry Pi Zero 2W (Running headless Raspberry Pi OS Lite, 32-bit).
 * **The Microcontroller:** Arduino Uno R3.
 * **The Bridge:** Micro-USB to USB Type-A OTG adapter, bypassing logic-level shifting for a direct, high-speed serial connection.
 * **Motor Control:** L293D Motor Shield driving 4x independent DC TT Motors.
@@ -50,7 +50,7 @@ The system operates across three distinct software layers, prioritizing low-late
 A lightweight, mobile-responsive HTML/CSS interface served locally. It utilizes JavaScript `fetch()` APIs bound to `touchstart` and `touchend` event listeners. This ensures asynchronous command transmission without page reloading, and guarantees an immediate `STOP` command is fired the millisecond the user lifts their finger.
 
 ### 2. The Backend (Python Flask Server)
-Hosted on the Raspberry Pi Zero 2 W, a lightweight Flask server routes the HTTP requests. It uses the `pyserial` library to convert web commands into raw integer packets, pushing them over the physical OTG connection to the microcontroller at a 115200 baud rate.
+Hosted on the Raspberry Pi Zero 2W, a lightweight Flask server routes the HTTP requests. It uses the `pyserial` library to convert web commands into raw integer packets, pushing them over the physical OTG connection to the microcontroller at a 115200 baud rate.
 
 ### 3. The Firmware (C++ Kinematics Engine)
 The Arduino Uno acts purely as the hardware execution layer. It continuously polls the hardware serial port, parses the incoming integers, and translates them into corresponding Pulse Width Modulation (PWM) and directional logic using the `AFMotor.h` library. 
@@ -60,7 +60,7 @@ The Arduino Uno acts purely as the hardware execution layer. It continuously pol
 ## 🚀 How to Run Locally
 
 ### Prerequisites
-* Raspberry Pi Zero 2 W accessible via SSH.
+* Raspberry Pi Zero 2W accessible via SSH.
 * Python 3, `flask`, and `pyserial` installed.
 * Arduino IDE for flashing the `.ino` firmware.
 
@@ -68,5 +68,5 @@ The Arduino Uno acts purely as the hardware execution layer. It continuously pol
 1. Flash the `mecanum_firmware.ino` to the Arduino Uno and connect it to the Pi via USB-OTG.
 2. Clone this repository onto the Raspberry Pi:
    ```bash
-   git clone [https://github.com/hihuzaifa/10-dof-mecanum-drive.git](https://github.com/hihuzaifa/10-dof-mecanum-drive.git)
-   cd 10-dof-mecanum-drive
+   git clone [https://github.com/hihuzaifa/3-dof-mecanum-drive.git](https://github.com/hihuzaifa/3-dof-mecanum-drive.git)
+   cd 3-dof-mecanum-drive
